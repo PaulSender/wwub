@@ -1,4 +1,4 @@
-# wwub
+# WWUB (What Would U Buy/Watch What U Buy)
 
 ## ReadMe for the project.
   ### Include
