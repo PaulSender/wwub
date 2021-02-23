@@ -1,5 +1,6 @@
 #env files
 server/.env
+wwub.pem
 
 # Logs
 logs
