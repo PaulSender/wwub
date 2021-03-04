@@ -1,6 +1,16 @@
-import React from 'react'
+import React, { useEffect } from 'react'
+import { connect } from 'react-redux'
+import { getItems, deleteItem } from '../actions/itemActions'
+import PropTypes from 'prop-types'
 
-function Home() {
+function Home(props) {
+
+    useEffect(() => {
+        props.getItems()
+    }, [])
+    const onDeleteClick = (id) => {
+        props.deleteItem(id)
+    }
     return (
         <div>
             <h3>Home</h3>
@@ -8,4 +18,12 @@ function Home() {
     )
 }
 
-export default Home
+Home.propTypes = {
+    getItems: PropTypes.func.isRequired,
+    item: PropTypes.object.isRequired,
+}
+
+const mapStateToProps = (state) => ({
+    item: state.item
+})
+export default connect(mapStateToProps, { getItems, deleteItem })(Home)

@@ -10,8 +10,7 @@ import store from './store'
 //Import Components
 import Home from './components/Home'
 
-function App() {
-  const [res, setres] = useState("")
+function App(props) {
   return (
     <Provider store={store}>
       <div className="App">
