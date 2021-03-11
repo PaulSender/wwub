@@ -33,3 +33,10 @@
   - General user guide
   - If API Based, how to use certain functions
   - Project's purpose (reason for creation)
+
+## Notes
+  - to protect a route, need to add auth function to the route in the back end. See routes/api/items edit route.
+  - Deployment: 
+    - Run npm run build for front-end changes
+    - commit and push all
+    - VM bash script takes care of the rest (sh deploy.sh)

@@ -10,12 +10,17 @@ var mongoose = require('mongoose')
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 
-var items = require('./routes/api/items')
+
 
 // DB config
-var db = require('./config/keys').mongoURI
+const dotenv = require('dotenv');
+dotenv.config();
+var db = process.env.MONGOURI
 
-mongoose.connect(db).then(() => {
+mongoose.connect(db, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+}).then(() => {
   console.log('MongoDB Connected')
 }).catch(e => {
   console.log(e)
@@ -46,7 +51,9 @@ app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, 'public/build/index.html'))
 })
 
-app.use('/api/items', items)
+app.use('/api/items', require('./routes/api/items'))
+app.use('/api/users', require('./routes/api/users'))
+app.use('/api/auth', require('./routes/api/auth'))
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 

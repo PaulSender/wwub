@@ -11,9 +11,15 @@ function Home(props) {
     const onDeleteClick = (id) => {
         props.deleteItem(id)
     }
+    
     return (
         <div>
             <h3>Home</h3>
+            {props.item.items.map(item => {
+                return (
+                    <p>{item.name}</p>
+                )
+            })}
         </div>
     )
 }
