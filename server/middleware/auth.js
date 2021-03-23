@@ -11,7 +11,7 @@ dotenv.config();
 function auth(req, res, next) {
     var token = req.header('x-auth-token')
     // Check for token
-    if (!token) res.status(401).json({ msg: 'Unauthorized' })
+    if (!token) return res.status(401).json({ msg: 'Unauthorized' })
     try {
         // Verify Token
         var decoded = jwt.verify(token, process.env.JWTSECRET)
