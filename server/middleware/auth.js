@@ -9,7 +9,7 @@ dotenv.config();
  * @param {*} next 
  */
 function auth(req, res, next) {
-    var token = req.header('x-auth-token')
+    var token = req.header('x-auth-token') || req.body.token.headers['x-auth-token']
     // Check for token
     if (!token) return res.status(401).json({ msg: 'Unauthorized' })
     try {

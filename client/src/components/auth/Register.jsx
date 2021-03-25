@@ -3,7 +3,11 @@ import React, { useEffect, useState, useRef } from 'react'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 import { register } from '../../actions/authActions'
-import {clearErrors} from '../../actions/errorActions'
+import { clearErrors } from '../../actions/errorActions'
+import history from '../../history'
+import styles from './Auth.module.css'
+import { Message } from 'semantic-ui-react'
+import logo from '../../images/logo.png'
 
 
 function Register(props) {
@@ -21,9 +25,14 @@ function Register(props) {
             setmsg(props.error.msg.msg)
         }
     }, [props.error])
+    
+    useEffect(() => {
+        if (props.isAuthenticated) {
+            history.push('/')
+        }
+    }, [props.isAuthenticated])
 
     const handleChange = e => {
-        console.log(e);
         setvalues({ ...values, [e.target.name]: e.target.value })
     }
     const onSubmit = e => {
@@ -39,15 +48,21 @@ function Register(props) {
 
         // Attempt Register
         props.register(newUser)
-        
+
     }
     return (
-        <div>
-            {msg}
+        <div className={styles.registerConatiner}>
+            <img className={styles.logo} src={logo} />
+            {msg &&
+                <Message negative className={styles.message}>
+                    <Message.Header>{msg}</Message.Header>
+                </Message>
+            }
             <input type="text" onChange={handleChange} value={values.name} name="name" placeholder="First and Last Name..." />
             <input type="email" onChange={handleChange} value={values.email} name="email" placeholder="Email..." />
             <input type="password" onChange={handleChange} value={values.password} name="password" placeholder="Password..." />
-            <button onClick={onSubmit}>Register</button>
+            <button className={styles.submit} onClick={onSubmit}>Register</button>
+            <p>Have An Account? <a href="/#/login">Login.</a></p>
         </div>
     )
 }

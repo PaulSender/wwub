@@ -6,6 +6,7 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var cors = require('cors')
 var mongoose = require('mongoose')
+const fileUpload = require('express-fileupload')
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
@@ -23,7 +24,7 @@ mongoose.connect(db, {
 }).then(() => {
   console.log('MongoDB Connected')
 }).catch(e => {
-  console.log(e)
+  console.error(e)
 })
 
 // Use Routes
@@ -32,6 +33,7 @@ var app = express();
 
 // Bodyparser Middleware
 app.use(bodyParser.json())
+app.use(fileUpload())
 
 
 

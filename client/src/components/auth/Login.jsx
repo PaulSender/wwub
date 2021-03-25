@@ -1,9 +1,14 @@
-import React, { useEffect, useState, useRef } from 'react'
-
+import React, { useEffect, useState } from 'react'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 import { login } from '../../actions/authActions'
-import {clearErrors} from '../../actions/errorActions'
+import { clearErrors } from '../../actions/errorActions'
+import history from '../../history'
+import styles from './Auth.module.css'
+import { Message } from 'semantic-ui-react'
+import logo from '../../images/logo.png'
+
+
 
 
 function Login(props) {
@@ -22,13 +27,18 @@ function Login(props) {
         }
     }, [props.error])
 
+    useEffect(() => {
+        if(props.isAuthenticated) {
+            history.push('/')
+        }
+    }, [props.isAuthenticated])
+
     const handleChange = e => {
-        console.log(e);
         setvalues({ ...values, [e.target.name]: e.target.value })
     }
     const onSubmit = e => {
         e.preventDefault();
-        const{email, password} = values
+        const { email, password } = values
         const user = {
             email,
             password
@@ -37,13 +47,26 @@ function Login(props) {
         props.clearErrors()
         // Attempt Login
         props.login(user)
+
+        function redirect() {
+            if (props.isAuthenticated) {
+                history.push("/")
+            }
+        }
+        setTimeout(redirect(), 1000)
     }
     return (
-        <div>
-            {msg}
+        <div className={styles.loginContainer}>
+            <img className={styles.logo} src={logo} />
+            {msg &&
+                <Message negative className={styles.message}>
+                    <Message.Header>{msg}</Message.Header>
+                </Message>
+            }
             <input type="email" onChange={handleChange} value={values.email} name="email" placeholder="Email..." />
             <input type="password" onChange={handleChange} value={values.password} name="password" placeholder="Password..." />
-            <button onClick={onSubmit}>Login</button>
+            <button className={styles.submit} onClick={onSubmit}>Login</button>
+                <p>Don't have an account? <a href="/#/register">Register Here.</a></p>
         </div>
     )
 }

@@ -10,7 +10,7 @@ var Item = require('../../models/Item');
  * @access Public
  */
 router.get('/', function (req, res) {
-    Item.find().sort({date: -1}).then(items => res.json(items))
+    Item.find().sort({ date: -1 }).then(items => res.json(items))
 })
 
 /**
@@ -18,8 +18,11 @@ router.get('/', function (req, res) {
  * @desc Make edits to an item
  * @access Private
  */
-router.post('/edit', auth, function(req, res) {
-    res.send('edit')
+router.post('/add', auth, function (req, res) {
+    var {values} = req.body
+    var {image} = req.files
+    values = JSON.parse(values)
+    res.status(200).send('edit')
 })
 
 module.exports = router

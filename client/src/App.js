@@ -12,6 +12,7 @@ import Logout from './components/auth/Logout'
 import Login from './components/auth/Login'
 import AddItem from './components/private/AddItem'
 import NavBar from './components/NavBar'
+import Profile from './components/private/Profile'
 
 
 class App extends Component {
@@ -35,6 +36,9 @@ class App extends Component {
             </Route>
             <Route path="/add">
               <AddItem/>
+            </Route>
+            <Route path="/profile">
+              <Profile />
             </Route>
           </HashRouter>
         </div>
