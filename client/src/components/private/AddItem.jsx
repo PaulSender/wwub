@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Dropdown, Message } from 'semantic-ui-react'
 import styles from './Profile.module.css'
 import { connect } from 'react-redux'
@@ -11,18 +11,26 @@ import { options } from '../../data'
 
 
 function AddItem(props) {
+    const [user, setuser] = useState()
     const [image, setimage] = useState()
     const [values, setvalues] = useState()
     const [msg, setmsg] = useState()
+    const [imageData, setimageData] = useState()
+    useEffect(() => {
+        setuser(props.auth.user)
+      }, [props.auth])
     const handleSubmit = (e) => {
         e.preventDefault()
+        console.log(user);
         var formData = new FormData()
         formData.append('image', image)
         formData.append('values', JSON.stringify(values))
-        if (values.url && values.name && values.category && values.rating && image.name) {
+        formData.append('user', user._id)
+        if (values.url && values.name && values.category && values.rating && image) {
             axios.post('/api/items/add', formData, tokenConfig(store.getState)).then(res => {
                 if (res) {
-                    window.scroll(0,0)
+                    // setimageData(`data:image/*;base64,${arrayBufferToBase64(res.data.image.data.data)}`)
+                    window.scroll(0, 0)
                     setmsg("Success!")
                 }
             }).catch(e => {
@@ -31,37 +39,47 @@ function AddItem(props) {
         }
         else {
             window.scroll(0, 0)
-            setmsg("Failed: Please Fill Out All Feilds")
+            setmsg("Failed: Please Fill Out All Feilds Correctly")
         }
 
     }
     const handleUpload = (e) => {
-        var file = e.target.files[0]
-        setimage(file)
+        var fileName = e.target.files[0].name
+        var extFile = fileName.split(".")[1]
+        if (extFile == "jpg" || extFile == "jpeg" || extFile == "png" || extFile === 'PNG') {
+            var file = e.target.files[0]
+            setimageData(URL.createObjectURL(file))
+            setimage(file)
+        } else {
+            setmsg("Failed: Only image files are allowed!");
+        }
+
     }
     const handleChange = (e) => {
         setvalues({ ...values, [e.target.name]: e.target.value })
     }
     if (props.auth.isAuthenticated) {
         return (
-            <form onSubmit={handleSubmit}>
-
-                <div className={styles.addItemContainer}>
-                    {msg && <Message style={{height: '100%'}} negative={msg.includes("Failed")} positive={msg.includes("Success")} className={styles.message}>
-                        <Message.Header>{msg}</Message.Header>
-                    </Message>}
+            <form onSubmit={handleSubmit} className={styles.container}>
+                <h3 style={{ marginTop: '1%' }}>Add New Item</h3>
+                {msg && <Message style={{ height: '100%', width: '100%', margin: 'auto auto' }} negative={msg.includes("Failed")} positive={msg.includes("Success")} className={styles.message}>
+                    <Message.Header>{msg}</Message.Header>
+                </Message>}
+                <div className={styles.imageContainer}>
                     <div>
-                        <h4>Add Item</h4>
-                        <p>Picture</p>
-                        <input type="file" onChange={handleUpload} />
+                        <p>Upload an Image of the Item</p>
+                        <input type="file" accept="image/*" onChange={handleUpload} />
+                        <img src={imageData} className={styles.image} />
                     </div>
-                    <input required type="url" name="url" placeholder="Link to item" onChange={handleChange} />
-                    <input required type="text" name="name" placeholder="Give this item a name" onChange={handleChange} />
-                    <Dropdown required options={options} name="category" selection search placeholder="Select Category" onChange={(e, data) => {
+                </div>
+                <div className={styles.infoContainer}>
+                    <input className={styles.inputs} required type="url" name="url" placeholder="Link to item" onChange={handleChange} />
+                    <input className={styles.inputs} required type="text" name="name" placeholder="Give this item a name" onChange={handleChange} />
+                    <Dropdown className={styles.inputs} required options={options} name="category" selection search placeholder="Select Category" onChange={(e, data) => {
                         data.target = data
                         handleChange(data)
                     }} />
-                    <input required type="text" name="rating" placeholder="Give this item a rating (out of 5)" onChange={handleChange} />
+                    <input className={styles.inputs} required type="number" name="rating" placeholder="Give this item a rating (out of 5)" onChange={handleChange} />
                     <button type="submit">Submit</button>
                 </div>
             </form >

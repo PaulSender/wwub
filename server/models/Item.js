@@ -12,6 +12,42 @@ var ItemSchema = new Schema({
             type: Date,
             default: Date.now()
         }
+    },
+    url: {
+        type: String,
+        required: true,
+        date: {
+            type: Date,
+            default: Date.now()
+        }
+    },
+    category: {
+        type: String,
+        required: true,
+        date: {
+            type: Date,
+            default: Date.now()
+        }
+    },
+    rating: {
+        type: Number,
+        required: true,
+        date: {
+            type: Date,
+            default: Date.now()
+        }
+    },
+    image: {
+        data: Buffer,
+        contentType: String
+    },
+    user: {
+        type: String, 
+        required: true, 
+        date: {
+            type: Date,
+            default: Date.now()
+        }
     }
 })
 

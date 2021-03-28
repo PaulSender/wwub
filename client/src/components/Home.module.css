@@ -32,34 +32,3 @@
     width: 25px;
     border: 1px solid black;
 }
-
-.infoContainer {
-    display: grid;
-    grid-template-columns: 100%;
-    grid-template-rows: repeat(5, 1fr);
-    grid-gap: 5%;
-    /* margin-top: 20vh; */
-    margin-top: 1%;
-}
-.imageContainer {
-    display: grid;
-    grid-template-columns: 100%;
-    grid-template-rows: 10% 90%;
-    padding: 8px;
-}
-.inputs {
-    height: 25px;
-    border: none;
-    border-bottom: 1px solid #9455e0;
-    border-radius: 0px;
-}
-.image {
-    width: 50%;
-    margin: auto auto;
-    margin-top: 2%;
-}
-.container {
-    width: 25%;
-    margin: auto auto;
-    margin-top: 4%;
-}
