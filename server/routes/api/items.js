@@ -43,4 +43,22 @@ router.post('/add', auth, function (req, res) {
     })
 })
 
+/**
+ * @route POST
+ * @desc Make edits to an item
+ * @access Private
+ */
+router.post('/delete', auth, function (req, res) {
+    var user = req.body.user
+    console.log(req.body.id);
+    Item.deleteOne({_id: req.body.id}).then(response => {
+        if(response) {
+            Item.find({ user: user._id }).sort({ date: -1 }).then(items => res.json(items))
+        }
+    }).catch(e => {
+        console.error(e)
+        res.send("AN ERROR HAS OCCURED CHECK CONSOLE")
+    })
+})
+
 module.exports = router

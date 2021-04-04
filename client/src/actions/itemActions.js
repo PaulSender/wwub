@@ -1,4 +1,4 @@
-import { GET_ITEMS, ADD_ITEM, DELETE_ITEM, ITEMS_LOADING } from './types'
+import { GET_ITEMS, ITEMS_LOADING } from './types'
 import axios from 'axios'
 
 

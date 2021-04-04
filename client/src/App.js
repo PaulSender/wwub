@@ -1,18 +1,11 @@
 import './App.css';
 import React, { Component } from 'react'
 import { Provider } from 'react-redux'
-import { HashRouter, Link, Route } from 'react-router-dom'
 import store from './store'
 import { loadUser } from './actions/authActions'
 
-//Import Components
-import Home from './components/Home'
-import Register from './components/auth/Register'
-import Logout from './components/auth/Logout'
-import Login from './components/auth/Login'
-import AddItem from './components/private/AddItem'
 import NavBar from './components/NavBar'
-import Profile from './components/private/Profile'
+import Router from './Router'
 
 
 class App extends Component {
@@ -24,23 +17,8 @@ class App extends Component {
       <Provider store={store}>
         <NavBar />
         <div className="App">
-          <HashRouter>
-            <Route exact path="/">
-              <Home />
-            </Route>
-            <Route path="/register">
-              <Register />
-            </Route>
-            <Route path="/login">
-              <Login />
-            </Route>
-            <Route path="/add">
-              <AddItem/>
-            </Route>
-            <Route path="/profile">
-              <Profile />
-            </Route>
-          </HashRouter>
+          {/* Create Routing Component and connect it to redux state... then use props.isLoading/isAuthenticating to build private routes */}
+          <Router />
         </div>
       </Provider>
     )

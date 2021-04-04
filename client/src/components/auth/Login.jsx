@@ -29,7 +29,7 @@ function Login(props) {
 
     useEffect(() => {
         if(props.isAuthenticated) {
-            history.push('/')
+          history.push(history.location.pathname)
         }
     }, [props.isAuthenticated])
 
@@ -64,8 +64,12 @@ function Login(props) {
                 </Message>
             }
             <input type="email" onChange={handleChange} value={values.email} name="email" placeholder="Email..." />
-            <input type="password" onChange={handleChange} value={values.password} name="password" placeholder="Password..." />
-            <button className={styles.submit} onClick={onSubmit}>Login</button>
+            <input type="password" onChange={handleChange} value={values.password} name="password" placeholder="Password..." onKeyPress={(e) => {
+                if(e.key === 'Enter') {
+                    onSubmit(e)
+                }
+            }}/>
+            <button className={styles.submit} onClick={onSubmit} >Login</button>
                 <p>Don't have an account? <a href="/#/register">Register Here.</a></p>
         </div>
     )

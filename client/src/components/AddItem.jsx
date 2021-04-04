@@ -4,9 +4,9 @@ import styles from './Profile.module.css'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 import axios from 'axios'
-import { tokenConfig } from '../../actions/authActions'
-import store from '../../store'
-import { options } from '../../data'
+import { tokenConfig } from '../actions/authActions'
+import store from '../store'
+import { options } from '../data'
 
 
 
