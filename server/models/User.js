@@ -29,6 +29,13 @@ var UserSchema = new Schema({
     register_date: {
         type: Date,
         default: Date.now()
+    },
+    rated_items: {
+        type: [String],
+        date: {
+            type: Date,
+            default: Date.now()
+        },
     }
 })
 

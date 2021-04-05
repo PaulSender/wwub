@@ -29,8 +29,8 @@ var ItemSchema = new Schema({
             default: Date.now()
         }
     },
-    rating: {
-        type: Number,
+    ratings: {
+        type: [Number],
         required: true,
         date: {
             type: Date,

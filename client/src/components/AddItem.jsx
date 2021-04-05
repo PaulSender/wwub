@@ -6,6 +6,7 @@ import PropTypes from 'prop-types'
 import axios from 'axios'
 import { tokenConfig } from '../actions/authActions'
 import store from '../store'
+import { loadUser } from '../actions/authActions'
 import { options } from '../data'
 
 
@@ -25,11 +26,13 @@ function AddItem(props) {
         var formData = new FormData()
         formData.append('image', image)
         formData.append('values', JSON.stringify(values))
+        console.log(user._id);
         formData.append('user', user._id)
         if (values.url && values.name && values.category && values.rating && image) {
             axios.post('/api/items/add', formData, tokenConfig(store.getState)).then(res => {
                 if (res) {
                     // setimageData(`data:image/*;base64,${arrayBufferToBase64(res.data.image.data.data)}`)
+                    store.dispatch(loadUser())
                     window.scroll(0, 0)
                     setmsg("Success!")
                 }
