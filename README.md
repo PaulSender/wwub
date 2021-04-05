@@ -1,4 +1,4 @@
-# WWUB (What Would U Buy/Watch What U Buy)
+# WWUB (https://18.218.174.222:80/#/ || https://watchwhatyoubuy.com)
 
 ## Installation Instructions
   1. Copy URL from Github
