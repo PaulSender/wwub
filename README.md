@@ -22,18 +22,8 @@
     - ```db.createCollection("items")```
   5. Backend code should attempt to connect to the "wwub database on localhost" so we should need to change anything in the code.
 
-
 ## TODO
   - Handle tasks/todo items in Github : https://github.com/PaulSender/wwub/projects/1
-
-## ReadMe for the project.
-
-  ### Include
-  - Installation Instructions
-  - General user guide
-  - If API Based, how to use certain functions
-  - Project's purpose (reason for creation)
-
 ## Notes
   - to protect a route, need to add auth function to the route in the back end. See routes/api/items edit route.
   - Deployment: 
