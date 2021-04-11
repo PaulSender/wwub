@@ -6,7 +6,7 @@ var Item = require('../../models/Item');
 const fs = require('fs')
 var mongodb = require('mongodb');
 const User = require('../../models/User');
-
+const _ = require('underscore')
 
 /**
  * @route GET api/items
@@ -16,16 +16,25 @@ const User = require('../../models/User');
 router.get('/', function (req, res) {
     if (req.query.user) {
         var user = JSON.parse(req.query.user)
-        Item.find({ user: user._id }).sort({ date: -1 }).then(items => res.json(items))
+        Item.find({ user: user._id }).sort({ date: -1 }).then(items => res.json(modulizeItems(items)))
     }
     else if (req.query.category) {
-        Item.find({ category: req.query.category }).sort({ date: -1 }).then(items => res.json(items))
+        Item.find({ category: req.query.category }).sort({ date: -1 }).then(items => res.json(modulizeItems(items)))
     }
     else {
-        Item.find().sort({ date: -1 }).then(items => res.json(items))
+        Item.find().sort({ date: -1 }).then(items => res.json(modulizeItems(items)))
     }
 })
-
+/**
+ * @desc break total items into subarrays for grid-rendering
+ * @return {Array[Items]} every 18 items, create a new sub array. Return the parent array
+ */
+function modulizeItems(items) {
+    var i = 18, list = _.groupBy(items, function(a, b){
+        return Math.floor(b/i);
+    });
+  return _.toArray(list) 
+}
 /**
  * @route POST
  * @desc add an item
@@ -89,15 +98,6 @@ router.post('/rate', async function (req, res) {
             res.status(200).send(doc)
         });
     }
-})
-
-/**
- * @route POST
- * @desc Update Rating on an Item
- * @access Public
- */
-router.post('/update', function (req, res) {
-    console.log(req.body);
 })
 
 module.exports = router

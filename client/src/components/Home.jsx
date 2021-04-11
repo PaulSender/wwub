@@ -12,24 +12,7 @@ function Home(props) {
     const [items, setitems] = useState()
     const [category, setcategory] = useState()
     const [updated, setupdated] = useState(false)
-    const handleUpdate = (variables) => {
-        axios.post('/api/items/update', variables).then(res => {
-            if (res) {
-                setcategory(category)
-            }
-        }).catch(e => {
-            console.error(e);
-        })
-    }
-    const handleRate = (variables) => {
-        axios.post('/api/items/rate', variables).then(res => {
-            if (res) {
-                setupdated(true)
-            }
-        }).catch(e => {
-            console.error(e);
-        })
-    }
+
     useEffect(() => {
         axios.get('/api/items/').then(res => {
             setitems(res.data)
@@ -44,19 +27,35 @@ function Home(props) {
         })
     }, [category])
     return (
-        <div>
+        <div className={styles.homeContainer}>
             {props.auth.user && <h2>Welcome {props.auth.user.name}</h2>}
-            <div className={styles.profileContainer}>
-                <Dropdown className={styles.inputs} required options={options} name="category" selection search placeholder="Select Category" onChange={(e, data) => {
+            <div className={styles.dropdownContainer}>
+                <Dropdown style={{ height: '20px' }} required options={options} name="category" selection search placeholder="I'm looking for..." onChange={(e, data) => {
                     setcategory(data.value)
                 }} />
-                <Card.Group style={{ width: '90%', margin: 'auto auto' }} itemsPerRow={3}>
-                    {items && items.map(item => {
-                        return (
-                            <ItemCard {...item} page={'home'} user={props.auth.user} handleUpdate={handleUpdate} handleRate={handleRate} updated={updated}/>
-                        )
-                    })}
-                </Card.Group>
+            </div>
+            <div className={styles.profileContainer}>
+                {items && items.map(subArrayItem => {
+                    return (
+                        <div className={styles.cardContainer}>
+                            {subArrayItem.map((item, i) => {
+                                if (i === 2) {
+                                    return (
+                                        <ItemCard {...item} page={'home'} user={props.auth.user} big={true} right={true} />
+                                    )
+                                }
+                                if (i === 10) {
+                                    return (
+                                        <ItemCard {...item} page={'home'} user={props.auth.user}   left={true} big={true} />
+                                    )
+                                }
+                                return (
+                                    <ItemCard {...item} page={'home'} user={props.auth.user} />
+                                )
+                            })}
+                        </div>
+                    )
+                })}
             </div>
         </div>
     )

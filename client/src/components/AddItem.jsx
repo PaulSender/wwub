@@ -63,7 +63,7 @@ function AddItem(props) {
     }
     if (props.auth.isAuthenticated) {
         return (
-            <form onSubmit={handleSubmit} className={styles.container}>
+            <form onSubmit={handleSubmit} className={styles.addContainer}>
                 <h3 style={{ marginTop: '1%' }}>Add New Item</h3>
                 {msg && <Message style={{ height: '100%', width: '100%', margin: 'auto auto' }} negative={msg.includes("Failed")} positive={msg.includes("Success")} className={styles.message}>
                     <Message.Header>{msg}</Message.Header>
@@ -82,7 +82,7 @@ function AddItem(props) {
                         data.target = data
                         handleChange(data)
                     }} />
-                    <input className={styles.inputs} required type="number" name="rating" placeholder="Give this item a rating (out of 5)" onChange={handleChange} />
+                    <input className={styles.inputs} required type="number" name="rating" min={0} max={5} placeholder="Give this item a rating (out of 5)" onChange={handleChange} />
                     <button type="submit">Submit</button>
                 </div>
             </form >

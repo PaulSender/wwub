@@ -4,7 +4,7 @@ import styles from './Profile.module.css'
 import history from '../history'
 import axios from 'axios'
 import ItemCard from './ItemCard'
-import {Card} from 'semantic-ui-react'
+import { Card } from 'semantic-ui-react'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 import { tokenConfig } from '../actions/authActions'
@@ -23,17 +23,33 @@ function Profile(props) {
     })
   }
   return (
-    <div className={styles.profileContainer}>
+    <div className={styles.container}>
       <button onClick={() => {
         history.push('/add')
-      }} style={{ width: '10%', justifySelf: 'end' }}>Add Item</button>
-      <Card.Group style={{ width: '90%', margin: 'auto auto' }} itemsPerRow={3}>
-        {items && items.map(item => {
+      }} className={styles.add}>Add Item</button>
+      <div className={styles.profileContainer}>
+        {items && items.map(subArrayItem => {
           return (
-            <ItemCard {...item} page={'profile'} handleDelete={handleDelete} />
+            <div className={styles.cardContainer}>
+              {subArrayItem.map((item, i) => {
+                if (i === 2) {
+                  return (
+                    <ItemCard {...item} page={'profile'} user={props.auth.user} big={true} right={true} handleDelete={handleDelete}/>
+                  )
+                }
+                if (i === 10) {
+                  return (
+                    <ItemCard {...item} page={'profile'} user={props.auth.user} left={true} big={true} handleDelete={handleDelete}/>
+                  )
+                }
+                return (
+                  <ItemCard {...item} page={'profile'} user={props.auth.user} handleDelete={handleDelete}/>
+                )
+              })}
+            </div>
           )
         })}
-      </Card.Group>
+      </div>
     </div>
   )
 }

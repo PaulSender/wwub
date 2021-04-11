@@ -17,7 +17,6 @@ var usersRouter = require('./routes/users');
 const dotenv = require('dotenv');
 dotenv.config();
 var db = process.env.MONGOURI
-
 mongoose.connect(db, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
