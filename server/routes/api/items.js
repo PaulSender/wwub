@@ -16,7 +16,10 @@ const _ = require('underscore')
 router.get('/', function (req, res) {
     if (req.query.user) {
         var user = JSON.parse(req.query.user)
-        Item.find({ user: user._id }).sort({ date: -1 }).then(items => res.json(modulizeItems(items)))
+        Item.find({ user: user._id }).sort({ date: -1 }).then(items => res.json(modulizeItems(items))).catch(e => {
+            console.error(e)
+            res.send(e)
+        })
     }
     else if (req.query.category) {
         Item.find({ category: req.query.category }).sort({ date: -1 }).then(items => res.json(modulizeItems(items)))

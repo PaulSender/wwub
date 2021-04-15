@@ -47,6 +47,7 @@ const OverLay = (props) => {
     return (
         <div className={props.big ? styles.overlayBig : styles.overlaySmall}>
             <div className={styles.overlayContent}>
+                <p>{item.name}</p>
                 <p>Rating: {parseInt(item.ratings.reduce((a, b) => a + b, 0) / item.ratings.length)}/5</p>
                 <a href={item.url}>
                     <Icon name='linkify' />
