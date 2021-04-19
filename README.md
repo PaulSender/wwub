@@ -1,4 +1,4 @@
-# [WWUB](https://watchwhatyoubuy.com)
+# [WWUB](http://watchwhatyoubuy.com)
 
 ## Installation Instructions
   1. Copy URL from Github
