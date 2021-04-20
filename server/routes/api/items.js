@@ -89,7 +89,6 @@ router.post('/rate', async function (req, res) {
     var userQuery = await User.findOne({ _id: req.body.userID })
     var prevRated = userQuery.rated_items
     passed = await User.findOneAndUpdate({ _id: req.body.userID }, { $set: { rated_items: [...prevRated, req.body.itemID] } }, { new: true, useFindAndModify: false })
-    console.log(passed);
     if (passed) {
         var ratingQuery = await Item.findOne({ _id: req.body.itemID })
         var prevRatings = ratingQuery.ratings

@@ -1,6 +1,6 @@
 import axios from 'axios'
 import React, { useState } from 'react'
-import { Card, Icon, Image } from 'semantic-ui-react'
+import { Icon, Image } from 'semantic-ui-react'
 import { arrayBufferToBase64 } from '../utilityFunctions'
 import styles from './ItemCard.module.css'
 import store from '../store'
@@ -92,7 +92,7 @@ const RateItem = (props) => {
                 axios.post('/api/items/rate', { userID: props.user._id, itemID: props._id, rating }).then(res => {if(res) {handleRate()}}).catch(e => {
                     console.error(e);
                 })
-            }}>Rate</button></p >
+            }}>Rate</button></p>
         )
     }
     else {
